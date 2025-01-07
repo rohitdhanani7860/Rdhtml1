@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dynamic Sidebar</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form action="" method="get">
+        <input type="search" name="q" placeholder="Search here......">
+        <input type="submit" value="Search">
+      </form>
+      
+      <div id="search-results"></div>
+      
+      <script>
+        const form = document.querySelector('form');
+        const searchResultsDiv = document.getElementById('search-results');
+      
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const searchTerm = new URLSearchParams(new FormData(form)).get('q');
+          console.log(searchTerm);
+      
+          // Define a dictionary of search terms and corresponding URLs
+          const searchTerms = {
+            'home': 'file:///C:/Users/Computer/Downloads/kuvh%20be%20html)/home.html',
+            'setting': 'file:///C:/Users/Computer/Downloads/kuvh%20be%20html)/setting.html',
+            'contact': 'file:///C:/Users/Computer/Downloads/kuvh%20be%20html)/contact.html',
+			'help': 'file:///C:/Users/Computer/Downloads/kuvh%20be%20html)/help.html',
+          };
+      
+          // Check if the search term matches a URL
+          if (searchTerms[searchTerm.toLowerCase()]) {
+            // Open the corresponding URL
+            window.open(searchTerms[searchTerm.toLowerCase()], '_blank');
+          } else {
+            // Display a message if no matching URL is found
+            searchResultsDiv.innerHTML = `No matching URL found for "${searchTerm}"`;
+          }
+        });
+      </script>
+      
+	<div id="sidebar" style="width: 50px; background: rgb(153, 201, 216);">
+		<div id="logo">
+			<i class="fas fa-bars" onclick="openSidebar()"></i>
+		</div>
+		<div id="menu" style="display:none;height: 500px;">
+			<i class="fas fa-times" onclick="closeSidebar()" style="position: absolute; top: 20px; right: 20px; cursor: pointer;"></i>
+			<ul style="list-style: none !important">
+				<li style="
+                padding: 20px;"><i class="fas fa-tachometer-alt"></i> <a href="file:///C:/Users/Computer/Downloads/kuvh%20be%20html)/home.html">home</a></li>
+				<li style="
+                padding: 20px;"><i class="fas fa-cog"></i> <a href="file:///C:/Users/Computer/Downloads/kuvh%20be%20html)/setting.html">setting </a></li>
+				<li style="
+                padding: 20px;"><i class="fas fa-user"></i> <a href="file:///C:/Users/Computer/Downloads/kuvh%20be%20html)/contact.html">contact</a></li>
+				<li style="
+                padding: 20px;"><i class="fas fa-question-circle"></i> <a href="file:///C:/Users/Computer/Downloads/kuvh%20be%20html)/help.html">Help</a></li>
+			</ul>
+		</div>
+	</div>
+    
+	<script>
+		function openSidebar() {
+			document.getElementById("menu").style.display = "block";
+			document.getElementById("sidebar").style.width = "250px";
+			document.addEventListener("click", closeSidebarOutside);
+			document.addEventListener("mouseleave", closeSidebarOutside);
+		}
+
+		function closeSidebar() {
+			document.getElementById("menu").style.display = "none";
+			document.getElementById("sidebar").style.width = "50px";
+			document.removeEventListener("click", closeSidebarOutside);
+			document.removeEventListener("mouseleave", closeSidebarOutside);
+		}
+
+		function closeSidebarOutside(event) {
+			if (!document.getElementById("sidebar").contains(event.target)) {
+				closeSidebar();
+			}
+		}
+	</script>
+</body>
+</html>
